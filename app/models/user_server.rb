@@ -2,7 +2,7 @@ require 'faraday'
 
 class UserServer
   def self.server
-    @@server ||= AuthenticUserServer
+    @server ||= AuthenticUserServer
   end
 
   def self.fetch(id)
@@ -15,9 +15,9 @@ class UserServer
 
   def self.mocks(on)
     if on 
-      @@server = MockUserServer
+      @server = MockUserServer
     else
-      @@server = AuthenticUserServer
+      @server = AuthenticUserServer
     end
   end
 end
