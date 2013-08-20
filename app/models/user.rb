@@ -2,8 +2,8 @@ class User
   attr_reader :id, :name
 
   def initialize(data)
-    @id = data[:id]
-    @name = data[:name]
+    @id = data['id']
+    @name = data['name']
   end
 
   def self.validate_user_id?(user_id, signature)

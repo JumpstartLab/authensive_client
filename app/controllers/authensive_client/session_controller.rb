@@ -2,13 +2,12 @@ module AuthensiveClient
   class SessionController < ApplicationController
     def login
       if User.validate_user_id?(params[:user_id], params[:authensive_signiture])
-        raise params.inspect
         session[:user_id] = params[:user_id]
         session[:authensive_signiture] = params[:authensive_signiture]
-        session[:user] = User.from_session(session).to_json
+        session[:user] = User.fetch(params[:user_id]).to_json
         redirect_to params[:return_to]
       else
-        raise ArgumentError.new("Signiture match failed")
+        raise ArgumentError.new("Signature match failed")
         redirect_to root_path
       end
     end
