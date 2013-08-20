@@ -1,10 +1,6 @@
 require './test/test_helper'
 
 class UserTest < Minitest::Test
-  def test_it_exists
-    assert UserTest
-  end
-
   def test_it_has_a_shared_secret
     assert User.shared_secret
   end
@@ -50,5 +46,12 @@ class UserTest < Minitest::Test
     user = StubbedUser.fetch(1)
     assert_equal "John Doe", user.name
     assert_equal 6, user.id
+  end
+
+  def test_it_uses_the_mock_server_when_instructed
+    UserServer.mocks(true)
+    UserServer.add_user({:id => 1, :name => "Mock User"})
+    user = UserServer.fetch(1)
+    assert_equal "Mock User", user.name
   end
 end

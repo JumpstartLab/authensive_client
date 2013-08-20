@@ -1,23 +1,3 @@
-require 'faraday'
-
-class UserServer
-  def self.remote_url
-    "http://localhost:4567/user/"
-  end
-
-  def self.url_for(id)
-    "#{remote_url}#{id}?authensive_signature=#{ User.signature_for(id) }"
-  end
-
-  def self.fetch(id)
-    JSON.parse remote_service.get(url_for(id)).body
-  end
-
-  def self.remote_service(connection = Faraday)
-    connection
-  end
-end
-
 class User
   attr_reader :id, :name
 
