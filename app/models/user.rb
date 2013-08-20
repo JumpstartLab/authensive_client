@@ -23,7 +23,7 @@ class User
   end
 
   def self.fetch(id)
-    new remote_service.fetch(id)
+    remote_service.fetch(id)
   end
 
   def self.remote_service

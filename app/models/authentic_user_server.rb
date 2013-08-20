@@ -8,7 +8,8 @@ class AuthenticUserServer
   end
 
   def self.fetch(id)
-    JSON.parse remote_service.get(url_for(id)).body
+    data = JSON.parse(remote_service.get(url_for(id)).body)
+    User.new data
   end
 
   def self.remote_service(connection = Faraday)

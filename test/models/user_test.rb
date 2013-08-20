@@ -29,29 +29,11 @@ class UserTest < Minitest::Test
     assert_equal "John Doe", user.name
   end
 
-  class StubbedUserServer < UserServer
-    def self.fetch(id)
-      {:name => "John Doe",
-       :id => 6}
-    end
-  end
-
-  class StubbedUser < User
-    def self.remote_service
-      StubbedUserServer
-    end
-  end
-
   def test_it_fetches_rich_user_data_from_the_master_server
-    user = StubbedUser.fetch(1)
-    assert_equal "John Doe", user.name
-    assert_equal 6, user.id
-  end
-
-  def test_it_uses_the_mock_server_when_instructed
     UserServer.mocks(true)
     UserServer.add_user({:id => 1, :name => "Mock User"})
-    user = UserServer.fetch(1)
+    user = User.fetch(1)
     assert_equal "Mock User", user.name
+    assert_equal 1, user.id
   end
 end
